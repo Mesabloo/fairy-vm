@@ -74,19 +74,19 @@ namespace vm
             os << "\nCONSTANTS TABLE: [\n";
             if (config.constants)
                 for (std::uint16_t i{0}; i < config.constants->size; ++i)
-                    os << i << " => " << config.constants->map[i] << "\n";
+                    os << "    " << i << " => " << config.constants->map[i] << "\n";
 
-            os << " ]\nLABELS TABLE: [\n";
+            os << "]\nLABELS TABLE: [\n";
             if (config.labels)
                 for (std::uint16_t i{0}; i < config.labels->size; ++i)
-                    os << i << " => 0x" << std::hex << config.labels->map[i] << "\n";
+                    os << "    " << i << " => 0x" << std::hex << config.labels->map[i] << "\n";
 
-            os << " ]\nCODE TABLE: [\n";
+            os << "]\nCODE TABLE: [\n";
             if (config.code)
                 for (std::uint64_t i{0}; i < config.code->size; ++i)
                     os << "    " << std::hex << i << ": " << config.code->map.at(i) << "\n";
 
-            return os << " ]" << std::endl;
+            return os << "]" << std::endl;
         }
     };
 }

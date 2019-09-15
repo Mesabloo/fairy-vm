@@ -66,7 +66,7 @@ namespace vm
                         std::uint64_t val{0};
                         for (std::uint16_t j{0};j < constant_size; ++j)
                             val <<= 8, val += is.get();
-                        table->map[constant_id] = vm::value_::from(val);
+                        table->map[constant_id] = val;
                         break;
                     }
                     case 0x02: // is double

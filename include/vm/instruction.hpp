@@ -20,10 +20,10 @@ namespace vm
 
         friend std::ostream& operator<<(std::ostream& os, vm::instruction const& i)
         {
-            os << "{" << std::hex << i.opcode << " ";
+            os << std::hex << i.opcode << " ";
             for (auto&& it = i.args.cbegin(); it != i.args.cend(); ++it)
                 os << std::hex << *it << " ";
-            return os << "}";
+            return os;
         }
     };
 }
