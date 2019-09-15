@@ -1,0 +1,6 @@
+[submodule "ext/argh"]
+	path = ext/argh
+	url = https://github.com/adishavit/argh
+[submodule "ext/termcolor"]
+	path = ext/termcolor
+	url = https://github.com/ikalnytskyi/termcolor
