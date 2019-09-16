@@ -8,13 +8,12 @@
 #include <vm/value.hpp>
 #include <memory>
 #include <unordered_map>
+#include <stack>
 
 namespace vm
 {
     struct constants_table
     {
-        constexpr static uint16_t MAX_SIZE = std::numeric_limits<std::uint16_t>::max();
-
         std::uint16_t size;
         std::unordered_map<std::uint16_t, vm::value> map;
 
@@ -29,8 +28,6 @@ namespace vm
 
     struct labels_table
     {
-        constexpr static uint16_t MAX_SIZE = std::numeric_limits<std::uint16_t>::max();
-
         std::uint16_t size;
         std::unordered_map<std::uint16_t, std::uint64_t> map;
 
@@ -60,11 +57,14 @@ namespace vm
     struct configuration
     {
         std::uint64_t ip{0};
+        std::stack<vm::value> stack;
+
+
         std::unique_ptr<vm::constants_table> constants;
         std::unique_ptr<vm::labels_table> labels;
         std::unique_ptr<vm::code_table> code;
 
-        configuration(std::uint64_t ip = 0): ip(ip), constants(nullptr), labels(nullptr), code(nullptr)
+        configuration(std::uint64_t ip = 0): ip(ip), stack{}, constants(nullptr), labels(nullptr), code(nullptr)
         {}
 
         friend std::ostream& operator<<(std::ostream& os, vm::configuration const& config)
@@ -84,7 +84,7 @@ namespace vm
             os << "]\nCODE TABLE: [\n";
             if (config.code)
                 for (std::uint64_t i{0}; i < config.code->size; ++i)
-                    os << "    " << std::hex << i << ": " << config.code->map.at(i) << "\n";
+                    os << "    0x" << std::hex << i << ": " << config.code->map.at(i) << "\n";
 
             return os << "]" << std::endl;
         }

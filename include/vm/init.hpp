@@ -25,7 +25,7 @@ namespace vm
             args_parser.add_params({"l", "load"});
             args_parser.parse(argc, argv);
 
-            std::string const file_name(args_parser({"-l", "--load"}).str());
+            std::string const file_name(args_parser({"l", "load"}).str());
             std::filesystem::path const p(file_name);
 
             if (!std::filesystem::exists(p))
@@ -137,7 +137,7 @@ namespace vm
                     for (uint8_t j{0}; j < args_size; ++j)
                     {
                         std::uint16_t arg = (is.get() << 8) | is.get();
-                        args[j] = arg;
+                        args.push_back(arg);
                     }
 
                 table->map.emplace(i, vm::instruction(op, args));
@@ -173,6 +173,9 @@ namespace vm
         config->constants = std::move(parse_constants_table(file));
         config->labels = std::move(parse_labels_table(file));
         config->code = std::move(parse_code_table(file));
+
+        if (config->labels->size > 0)
+            config->ip = config->labels->map.at(0);
 
         return config;
     }
